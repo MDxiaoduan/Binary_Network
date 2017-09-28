@@ -316,6 +316,7 @@ class ResNet:
                 B_fc = tf.sign(weight_fc2)
                 alpha_fc = tf.reduce_sum(abs(weight_fc2), 0)/2048*_init_.classes_numbers
                 fc = tf.multiply(tf.matmul(fc_in, B_fc), alpha_fc)
+                fc = tf.div(fc, 10)  # 或者加个BN使得输出fc小一点，这样lr可以大点
                 _init_.parameters += [weight_fc2]
         self.reuse = True
         return fc, conv1
